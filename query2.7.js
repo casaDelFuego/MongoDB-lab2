@@ -1,20 +1,12 @@
+print(db)
 const res = db.products.aggregate(
-    { "$unwind": "$category" },
     {
         "$group": {
-            "_id": {
-                'categories': '$category',
-            },
+            "_id":  '$category',
             "count": { "$sum": 1 }
-        }
-    },
-    { "$sort": { "_id.categories": 1 } },
-    {
-        "$group": {
-            "_id": "$_id.categories",
-            "count": { "$first": "$count" }
         }
     }
 )
+res.pretty().shellPrint()
 //print(tojson(res))
-res.shellPrint()
+//res.shellPrint()
